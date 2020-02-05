@@ -58,7 +58,8 @@ const TicketType = new GraphQLObjectType({
     author: {
       type: nonNull(UserType),
       resolve: profileResolver("resolve user", (ticket, _, ctx) => {
-        return UserService.getUserById(ticket.authorId);
+        const userLoader = ctx.getLoader(UserService);
+        return userLoader.load(ticket.authorId);
       }),
     },
   },

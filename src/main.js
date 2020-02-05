@@ -2,6 +2,7 @@ const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const morgan = require("morgan");
 const schema = require("./schema");
+const { buildLoaderGetter } = require("./services/loaders");
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(
   graphqlHTTP(request => ({
     schema,
     graphiql: true,
-    context: { request },
+    context: { request, getLoader: buildLoaderGetter() },
   })),
 );
 
