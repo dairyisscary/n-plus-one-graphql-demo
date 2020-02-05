@@ -58,7 +58,7 @@ const TicketType = new GraphQLObjectType({
     author: {
       type: nonNull(UserType),
       resolve: profileResolver("resolve user", (ticket, _, ctx) => {
-        return UserService.getUserByIdSync(ticket.authorId);
+        return UserService.getUserById(ticket.authorId);
       }),
     },
   },
@@ -71,7 +71,7 @@ module.exports = new GraphQLSchema({
       tickets: {
         type: nonNullList(TicketType),
         resolve: profileResolver("resolve all tickets", () => {
-          return TicketService.getAllTicketsSync();
+          return TicketService.getAllTickets();
         }),
       }
     }
